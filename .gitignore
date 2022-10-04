@@ -56,6 +56,8 @@ TestResults/
 ######################
 .DS_Store?
 ehthumbs.db
+.vscode
+.vs
 Icon?
 Thumbs.db
 [Bb]in
