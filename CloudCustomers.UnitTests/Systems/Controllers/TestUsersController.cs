@@ -1,6 +1,7 @@
 using CloudCustomers.API.Controllers;
 using CloudCustomers.API.Models;
 using CloudCustomers.Services;
+using CloudCustomers.UnitTests.Fixtures;
 
 namespace CloudCustomers.UnitTests;
 
@@ -12,7 +13,7 @@ public class TestUsersController
         var mockUserService = new Mock<IUserService>();
         mockUserService 
             .Setup(service => service.GetAllUsers())
-            .ReturnsAsync(new List<User>());
+            .ReturnsAsync(UsersFixture.GetTestUsers());
         var sut = new UsersController(mockUserService.Object);
 
         var result = (OkObjectResult)await sut.Get();
@@ -43,7 +44,7 @@ public class TestUsersController
         var mockUserService = new Mock<IUserService>();
         mockUserService 
             .Setup(service => service.GetAllUsers())
-            .ReturnsAsync(new List<User>());
+            .ReturnsAsync(UsersFixture.GetTestUsers());
         var sut = new UsersController(mockUserService.Object);
 
         var result = await sut.Get();
@@ -52,5 +53,21 @@ public class TestUsersController
         var objectResult = (OkObjectResult)result;
         objectResult.Value.Should().BeOfType<List<User>>(); 
 
+    }
+
+    [Fact]
+    public async Task Get_OnNoUsersFound_Returns404()
+    {
+        var mockUserService = new Mock<IUserService>();
+        mockUserService 
+            .Setup(service => service.GetAllUsers())
+            .ReturnsAsync(new List<User>());
+        var sut = new UsersController(mockUserService.Object);
+
+        var result = await sut.Get();
+
+        result.Should().BeOfType<NotFoundResult>();
+        var objectResult = (NotFoundResult)result;
+        objectResult.StatusCode.Should().Be(404);
     }
 }
