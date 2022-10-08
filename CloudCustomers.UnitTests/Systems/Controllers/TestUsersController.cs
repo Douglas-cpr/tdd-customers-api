@@ -10,7 +10,7 @@ public class TestUsersController
     [Fact]
     public async Task Get_OnSuccess_ReturnsStatusCode200()
     {
-        var mockUserService = new Mock<IUserService>();
+        var mockUserService = new Mock<IUsersService>();
         mockUserService 
             .Setup(service => service.GetAllUsers())
             .ReturnsAsync(UsersFixture.GetTestUsers());
@@ -24,7 +24,7 @@ public class TestUsersController
     [Fact]
     public async Task Get_OnSuccess_InvokesUserServiceExactlyOnce() 
     {
-        var mockUserService = new Mock<IUserService>();
+        var mockUserService = new Mock<IUsersService>();
         mockUserService 
             .Setup(service => service.GetAllUsers())
             .ReturnsAsync(new List<User>());
@@ -41,7 +41,7 @@ public class TestUsersController
     [Fact]
     public async Task Get_OnSuccess_ReturnsListOfUsers()
     {
-        var mockUserService = new Mock<IUserService>();
+        var mockUserService = new Mock<IUsersService>();
         mockUserService 
             .Setup(service => service.GetAllUsers())
             .ReturnsAsync(UsersFixture.GetTestUsers());
@@ -58,7 +58,7 @@ public class TestUsersController
     [Fact]
     public async Task Get_OnNoUsersFound_Returns404()
     {
-        var mockUserService = new Mock<IUserService>();
+        var mockUserService = new Mock<IUsersService>();
         mockUserService 
             .Setup(service => service.GetAllUsers())
             .ReturnsAsync(new List<User>());

@@ -3,14 +3,19 @@ using CloudCustomers.API.Models;
 namespace CloudCustomers.Services;
 
 
-public interface IUserService
+public interface IUsersService
 {
   public Task<List<User>> GetAllUsers();
 }
 
-public class UserService : IUserService 
+public class UsersService : IUsersService 
 {
-   public UserService() { }
+  private readonly HttpClient _httpClient;
+
+   public UsersService(HttpClient httpClient) 
+   { 
+    _httpClient = httpClient;
+   }
 
   public Task<List<User>> GetAllUsers()
   {
