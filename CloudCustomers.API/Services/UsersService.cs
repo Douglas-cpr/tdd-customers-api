@@ -17,8 +17,9 @@ public class UsersService : IUsersService
     _httpClient = httpClient;
    }
 
-  public Task<List<User>> GetAllUsers()
+  public async Task<List<User>> GetAllUsers()
   {
-    throw new NotImplementedException();
+    var usersReponse = await _httpClient.GetAsync("https://test.com");
+    return new List<User>{};
   }
 }
