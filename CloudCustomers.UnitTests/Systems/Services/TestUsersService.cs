@@ -26,4 +26,16 @@ public class TestUsersService
         ItExpr.IsAny<CancellationToken>()
       );
   }
+
+  [Fact]
+  public async Task GetAllUsers_WhenCalled_ReturnsListOfUsers() {
+    var expectedResponse = UsersFixture.GetTestUsers();
+    var handlerMock = MockHttpMessageHandler<User>.SetupBasicGetResourceList(expectedResponse);
+    var httpClient = new HttpClient(handlerMock.Object);
+    var sut = new UsersService(httpClient);
+
+    var result = await sut.GetAllUsers();
+
+    result.Should().BeOfType<List<User>>();
+  }
 }
